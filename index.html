@@ -189,21 +189,12 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 <div class="wrap">
   <div class="top">
     <div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></span><span><b>음악적체육인</b> 앱 모음</span></div>
-    <nav class="toplinks" aria-label="자주 찾는 곳">
-      <a class="pillbtn" href="https://musicalpe.github.io/jumprope/board.html" target="_blank" rel="noopener"><img id="tl-jr" alt="">Jump Earth! 전국 현황판</a>
-      <a class="pillbtn" href="https://musicalpe.github.io/colormat/board.html" target="_blank" rel="noopener"><img id="tl-cm" alt="">색동 한마당</a>
-    </nav>
   </div>
 
   <header class="hero">
     <div class="hero-in">
       <h1>교실과 집에서 직접 만든 앱</h1>
       <p>필요해서 하나씩 만든 앱들을 모았어요. 카드를 누르면 화면 미리보기와 설치 견본, 설명서, 설치 없이 바로 써 볼 수 있는 링크가 나와요.</p>
-      <div class="hboxes">
-        <div class="hbox"><small>체육 수업 앱</small><strong>학교 구글 시트에 설치해서 써요</strong></div>
-        <div class="hbox"><small>바로 써 보기</small><strong>판정기 · 놀이터 <span id="try-n"></span>곳은 설치 없이</strong></div>
-        <div class="hbox"><small>업데이트</small><strong>새 판이 나오면 화면이 저절로 바뀌어요</strong></div>
-      </div>
     </div>
   </header>
 
@@ -323,7 +314,7 @@ const P=APPS.find(a=>a.id===FEAT);
 document.getElementById('feat-title').textContent=P.name;document.getElementById('feat-sub').textContent=P.sub;
 document.getElementById('feat-desc').textContent=P.desc;
 const fi=document.getElementById('feat-icon');fi.src=ICONS[FEAT];
-document.getElementById('tl-jr').src=ICONS.jumprope;document.getElementById('tl-cm').src=ICONS.colormat;
+
 document.getElementById('feat-specs').innerHTML=['핵심 기능','데이터 연동','사용 대상'].map((l,i)=>`<div class="spec"><div>${l}</div><div>${esc(P.specs[i])}</div></div>`).join('');
 document.getElementById('feat-tags').innerHTML=P.tags.map(x=>`<span>#${esc(x)}</span>`).join('');
 document.getElementById('feat-copy').href=P.copy;
@@ -370,7 +361,6 @@ function copyLink(a){
   function fallback(){const i=document.createElement('textarea');i.value=a.copy;document.body.append(i);i.select();let ok=false;try{ok=document.execCommand('copy')}catch(e){}i.remove();toast(ok?`${a.name} 설치 견본 주소를 복사했어요`:'복사가 막혀 있어요. 설치 견본 복사 단추를 눌러 주세요')}
 }
 document.querySelectorAll('[data-n]').forEach(n=>{const f=n.dataset.n;n.textContent=f==='all'?APPS.length:APPS.filter(a=>a.cat.includes(f)).length});
-document.getElementById('try-n').textContent=APPS.reduce((s,a)=>s+a.tries.length,0);
 render('all');
 </script>
 
