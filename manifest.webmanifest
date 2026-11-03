@@ -5,7 +5,7 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#F3F5F8",
+  "background_color": "#E3E7ED",
   "theme_color": "#3F4652",
   "lang": "ko",
   "description": "교실과 집에서 직접 만든 앱 모음",
