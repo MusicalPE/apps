@@ -14,9 +14,10 @@
 /* 점퍼스 · 체육교사 보조 프로그램과 같은 결: 연회색 바탕, 흰 카드, 코랄 강조, 주황 머리 카드 */
 :root{
   color-scheme:light;
-  --bg:#F4F5F7; --card:#FFFFFF; --ink:#1E2430; --ink2:#3C4453; --muted:#6B7382; --line:#E6E9EF; --soft:#F3F5F8;
-  --coral:#D47557; --coral2:#DE9479; --coral-dk:#B45D41; --coral-soft:#F8EEE9; --coral-line:#EBD2C6;
-  --ok:#3D7A63; --ok-bg:#EAF3EF; --sky:#3F6E8F; --sky-bg:#EAF1F6; --gray:#5B6474; --gray-bg:#EEF0F4;
+  --bg:#F3F5F8; --card:#FFFFFF; --ink:#1E2430; --ink2:#3C4453; --muted:#6B7382; --line:#E6E9EF; --soft:#F3F5F8;
+  --coral:#F26A3D; --coral2:#F7915E; --coral-dk:#D9532A; --coral-soft:#FFF1EB; --coral-line:#FBD3C2;
+  --gray1:#3F4652; --gray2:#5A6170;
+  --ok:#14805E; --ok-bg:#E8F7F1; --sky:#1F6FA8; --sky-bg:#E8F2FB; --gray:#5B6474; --gray-bg:#EEF0F4;
   --navy:#1E2430;
   --font:"Pretendard","Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
 }
@@ -31,7 +32,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 /* 맨 위 줄 */
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem}
-.logo{width:36px;height:36px;border-radius:10px;background:var(--coral);display:grid;place-items:center;color:#fff;font-size:1.1rem;box-shadow:0 2px 6px rgb(150 80 55 / .25)}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--coral);display:grid;place-items:center;color:#fff;font-size:1.1rem;box-shadow:0 2px 6px rgb(242 106 61 / .35)}
 .brand b{color:var(--coral)}
 .toplinks{display:flex;flex-wrap:wrap;gap:8px}
 .pillbtn{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.88rem;font-weight:700;color:var(--ink);text-decoration:none;box-shadow:0 1px 2px rgb(30 36 48 / .04)}
@@ -39,7 +40,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .pillbtn img{width:20px;height:20px;border-radius:5px;object-fit:cover}
 
 /* 주황 머리 카드 */
-.hero{position:relative;overflow:hidden;border-radius:24px;background:linear-gradient(135deg,var(--coral),var(--coral2));color:#fff;padding:clamp(22px,4vw,34px);box-shadow:0 8px 20px -14px rgb(150 80 55 / .45)}
+.hero{position:relative;overflow:hidden;border-radius:24px;background:linear-gradient(135deg,var(--gray1),var(--gray2));color:#fff;padding:clamp(22px,4vw,34px);box-shadow:0 10px 24px -14px rgb(30 36 48 / .5)}
 .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgb(255 255 255 / .08);pointer-events:none}
 .hero::before{width:300px;height:300px;right:-70px;top:-120px}
 .hero::after{width:220px;height:220px;left:44%;bottom:-150px}
@@ -47,8 +48,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .hero h1{margin:0;font-size:clamp(1.6rem,4.4vw,2.3rem);font-weight:900;letter-spacing:-.02em;line-height:1.2}
 .hero p{margin:0;font-size:.95rem;font-weight:500;color:rgb(255 255 255 / .92);max-width:62ch}
 .hboxes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
-.hbox{background:rgb(255 255 255 / .16);border:1px solid rgb(255 255 255 / .18);border-radius:16px;padding:14px 16px}
-.hbox small{display:block;font-size:.74rem;font-weight:700;opacity:.9}
+.hbox{background:rgb(255 255 255 / .1);border:1px solid rgb(255 255 255 / .14);border-radius:16px;padding:14px 16px}
+.hbox small{display:block;font-size:.74rem;font-weight:700;color:#FFB79C}
 .hbox strong{display:block;font-size:1.05rem;font-weight:800;line-height:1.35;margin-top:2px}
 
 /* 분류 칸 (점퍼스 숫자 칸 모양) */
@@ -84,7 +85,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .feat-tags span{font-size:.76rem;font-weight:700;color:var(--coral-dk);background:var(--coral-soft);padding:3px 10px;border-radius:8px}
 .btns{display:flex;flex-wrap:wrap;gap:10px;padding-top:4px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:.9rem;padding:12px 18px;border-radius:14px;text-decoration:none;border:1px solid transparent;cursor:pointer}
-.btn.hot{background:var(--coral);color:#fff;box-shadow:0 4px 10px -6px rgb(150 80 55 / .45)}
+.btn.hot{background:var(--coral);color:#fff;box-shadow:0 6px 14px -6px rgb(242 106 61 / .6)}
 .btn.hot:hover{background:var(--coral-dk)}
 .btn.line{background:var(--card);color:var(--ink);border-color:var(--line)}
 .btn.line:hover{border-color:var(--coral-line);color:var(--coral-dk)}
@@ -116,7 +117,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .foot{display:flex;gap:8px;padding:12px 16px 16px}
 .b1{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;font-weight:800;padding:10px 12px;border-radius:12px;text-decoration:none;border:1px solid;cursor:pointer}
 .b1.copy{color:var(--coral-dk);background:var(--coral-soft);border-color:var(--coral-line)}
-.b1.copy:hover{background:#F3E2DA}
+.b1.copy:hover{background:#FFE4D8}
 .b1.open{color:#fff;background:var(--coral);border-color:var(--coral)}
 .b1.open:hover{background:var(--coral-dk)}
 .b1.off{color:#9AA1AD;background:var(--soft);border-color:var(--line);cursor:not-allowed}
