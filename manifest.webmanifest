@@ -1,0 +1,30 @@
+{
+  "id": "/apps/",
+  "name": "음악적체육인 앱 모음",
+  "short_name": "앱 모음",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F3F5F8",
+  "theme_color": "#3F4652",
+  "lang": "ko",
+  "description": "교실과 집에서 직접 만든 앱 모음",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
