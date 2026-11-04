@@ -233,7 +233,8 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
         <div class="specs" id="feat-specs"></div>
         <div class="feat-tags" id="feat-tags"></div>
         <div class="btns">
-          <a class="btn hot" id="feat-copy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>설치 견본 복사</a>
+          <a class="btn hot" id="feat-copy" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>학교용 견본 복사</a>
+          <a class="btn line" id="feat-copy2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>클럽용 견본 복사</a>
           <button type="button" class="btn line" id="feat-more">자세히 보기</button>
         </div>
       </div>
@@ -267,11 +268,11 @@ const APPS=[
   copy:'https://docs.google.com/spreadsheets/d/1iyR4cNB6RvOIOdqUHLVmCqZC2Rp6E0fOOJ5P7jc3wxU/copy',
   links:[[VIDEO,'설치 방법 영상'],['https://musicalpe.github.io/pe-app/manual/','설명서']],tries:[]},
  {id:'jumprope',name:'점퍼스',sub:'학생 스스로 줄넘기 기록 & AI 카메라 판정',cat:['pe'],catLabel:'체육 수업',status:'ok',flat:true,
-  desc:'학생이 휴대폰으로 QR을 찍고 줄넘기 횟수를 기록해요. 카메라 판정기로 진짜 뛰었는지 확인하고, 급수 인증과 국토 대장정, 전국 학교가 함께 지구를 도는 현황판까지 이어져요.',
+  desc:'학생이 휴대폰으로 QR을 찍고 줄넘기 횟수를 기록해요. 카메라 판정기로 진짜 뛰었는지 확인하고, 급수 인증과 국토 대장정, 전국 학교가 함께 지구를 도는 현황판까지 이어져요. 스포츠클럽·태권도장용 클럽판도 따로 있어요.',
   tags:["QR 기록", "AI 카메라 판정", "전국 현황판", "급수 인증", "국토 대장정", "점프 Live"],specs:["줄넘기 누적 기록 & AI 판정", "구글 스프레드시트 연동", "학급 · 학교 단위 학생"],
-  copy:'https://docs.google.com/spreadsheets/d/1ItPU6WU1-buXQ_Cb9yRYjUz81IYXISoq3ul3_ht-4h0/copy',
-  links:[[VIDEO,'설치 방법 영상'],['https://musicalpe.github.io/jumprope/share/manual.html','설명서']],
-  tries:[['https://musicalpe.github.io/jump-rope-checker/','줄넘기 판정기'],['https://musicalpe.github.io/jumprope/board.html','Jump Earth! 전국 현황판'],['https://musicalpe.github.io/jumprope/hall.html','Jumpers! 기록실']]},
+  copy:'https://docs.google.com/spreadsheets/d/1ItPU6WU1-buXQ_Cb9yRYjUz81IYXISoq3ul3_ht-4h0/copy',copy2:'https://docs.google.com/spreadsheets/d/1__vTZLMSWahHYGn47NL134NwAxSESJNJA5wZb6x2q2Y/copy',
+  links:[[VIDEO,'설치 방법 영상'],['https://musicalpe.github.io/jumprope/share/manual.html','학교용 설명서'],['https://musicalpe.github.io/jumprope/club/share/manual.html','클럽용 설명서']],
+  tries:[['https://musicalpe.github.io/jump-rope-checker/','줄넘기 판정기'],['https://musicalpe.github.io/jumprope/board.html','Jump Earth! 전국 현황판'],['https://musicalpe.github.io/jumprope/hall.html','Jumpers! 기록실'],['https://musicalpe.github.io/jumprope/club/board.html','Jump Earth! 클럽 리그']]},
  {id:'colormat',name:'색동',sub:'바닥 4색 매트로 하는 몸놀이 게임',cat:['pe'],catLabel:'체육 수업',status:'sky',
   desc:'바닥의 빨강·노랑·초록·파랑 매트 위에서 뛰는 체육 게임 모음이에요. 색깔 뛰기, 기억 뛰기, 정답 뛰기 같은 게임을 고르고, 우리 반 기록을 모아 전국 현황판에 함께 쌓아요.',
   tags:["4색 매트", "게임 10가지", "카메라 칸 판정", "전국 한마당"],specs:["매트 게임 10가지 & 기록", "구글 스프레드시트 연동", "1~6학년 모두"],copy:null,
@@ -306,6 +307,7 @@ const SVG={copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function primary(a,cls='b1'){
+  if(a.copy&&a.copy2)return `<a class="${cls} copy" href="${a.copy}" target="_blank" rel="noopener">${SVG.copy}학교용 견본 복사</a><a class="${cls} copy" href="${a.copy2}" target="_blank" rel="noopener">${SVG.copy}클럽용 견본 복사</a>`;
   if(a.copy)return `<a class="${cls} copy" href="${a.copy}" target="_blank" rel="noopener">${SVG.copy}설치 견본 복사</a>`;
   if(a.open)return `<a class="${cls} open" href="${a.open}" target="_blank" rel="noopener">${SVG.open}열기</a>`;
   if(a.tries.length)return `<a class="${cls} copy" href="${a.tries[0][0]}" target="_blank" rel="noopener">${SVG.play}바로 써 보기</a>`;
@@ -343,6 +345,7 @@ const fi=document.getElementById('feat-icon');fi.src=ICONS[FEAT];
 document.getElementById('feat-specs').innerHTML=['핵심 기능','데이터 연동','사용 대상'].map((l,i)=>`<div class="spec"><div>${l}</div><div>${esc(P.specs[i])}</div></div>`).join('');
 document.getElementById('feat-tags').innerHTML=P.tags.map(x=>`<span>#${esc(x)}</span>`).join('');
 document.getElementById('feat-copy').href=P.copy;
+const c2=document.getElementById('feat-copy2');if(P.copy2)c2.href=P.copy2;else c2.hidden=true;
 const fs=SHOTS[FEAT][0];document.getElementById('feat-img').src=fs.src;document.getElementById('feat-cap').textContent=fs.cap;
 const fr=document.getElementById('feat-frame');
 fr.addEventListener('click',()=>openLb(fs));fr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLb(fs)}});
