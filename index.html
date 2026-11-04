@@ -90,6 +90,9 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .sec-h::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--coral)}
 
 /* 대표 프로그램 */
+#feat{cursor:pointer;transition:border-color .2s,box-shadow .2s}
+#feat:hover{border-color:var(--coral-line);box-shadow:0 14px 28px -18px rgb(30 36 48 / .3)}
+#feat a,#feat button{cursor:pointer}
 .feat-grid{display:grid;grid-template-columns:6fr 5fr;gap:28px;align-items:center}
 .feat-text{min-width:0;display:flex;flex-direction:column;gap:12px}
 .feat-name{display:flex;align-items:center;gap:12px}
@@ -111,7 +114,7 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .btn.hot:hover{background:var(--coral-dk)}
 .btn.line{background:var(--card);color:var(--ink);border-color:var(--line)}
 .btn.line:hover{border-color:var(--coral-line);color:var(--coral-dk)}
-.frame{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:zoom-in;background:var(--soft)}
+.frame{position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer;background:var(--soft)}
 .frame img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top left;display:block}
 .frame .cap{position:absolute;left:12px;bottom:12px;font-size:.76rem;font-weight:700;color:var(--ink);background:rgb(255 255 255 / .94);border:1px solid var(--line);padding:3px 10px;border-radius:999px}
 
@@ -355,7 +358,9 @@ document.getElementById('feat-copy').href=P.copy;
 const c2=document.getElementById('feat-copy2');if(P.copy2)c2.href=P.copy2;else c2.hidden=true;
 const fs=SHOTS[FEAT][0];document.getElementById('feat-img').src=fs.src;document.getElementById('feat-cap').textContent=fs.cap;
 const fr=document.getElementById('feat-frame');
-fr.addEventListener('click',()=>openLb(fs));fr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLb(fs)}});
+fr.setAttribute('aria-label','점퍼스 자세히 보기');
+fr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(FEAT,fr)}});
+feat.addEventListener('click',e=>{if(e.target.closest('a,button'))return;openModal(FEAT,fr)});
 document.getElementById('feat-more').addEventListener('click',e=>openModal(FEAT,e.currentTarget));
 
 // 자세히 보기
