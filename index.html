@@ -17,6 +17,14 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<script>
+/* 카카오톡 안 브라우저로 열면 휴대폰 기본 브라우저로 넘김 (한 번만) */
+(function(){
+  if (!/KAKAOTALK/i.test(navigator.userAgent)) return;
+  try{ if (sessionStorage.getItem("kakao-out")) return; sessionStorage.setItem("kakao-out", "1"); }catch(e){}
+  location.href = "kakaotalk://web/openExternal?url=" + encodeURIComponent(location.href);
+})();
+</script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
