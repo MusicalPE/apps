@@ -208,8 +208,19 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .links a{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--card)}
 .links a svg{color:var(--coral)}
 .links a:hover{border-color:var(--coral-line);color:var(--coral-dk)}
+.shell{border:1px solid var(--line);border-radius:14px;background:var(--soft);padding:4px 14px}
+.shell summary{cursor:pointer;font-size:.84rem;font-weight:800;color:var(--ink);padding:9px 0;list-style-position:inside}
+.shell summary span{font-weight:600;color:var(--muted);margin-left:6px}
+.shell-body{display:flex;flex-direction:column;gap:10px;padding:2px 0 12px}
+.shell-body p,.shell-body ol{margin:0;font-size:.82rem;line-height:1.6;color:var(--ink2)}
+.shell-body ol{padding-left:1.3em}
+.shell-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.shell-row b{flex:1;min-width:8em;font-size:.84rem}
+.shell-row button{font:inherit;font-size:.8rem;font-weight:800;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+.shell-row button:hover{border-color:var(--coral-line);color:var(--coral-dk)}
+@media (max-width:560px){.shell-row b{flex-basis:100%}}
 .mfoot{display:flex;flex-wrap:wrap;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
-.mfoot .b1{padding:12px 16px;font-size:.9rem}
+.mfoot .b1{padding:12px 16px;font-size:.9rem;white-space:nowrap}
 .mfoot .b2{padding:12px 18px;font-size:.9rem}
 .lb{position:fixed;inset:0;z-index:40;background:rgb(20 24 32 / .92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
   padding:max(20px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(20px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
@@ -332,6 +343,31 @@ const INTRO={
   cam:'https://youtu.be/kbE7CTnbinI',
   trip:'https://youtu.be/kbE7CTnbinI'
 };
+/* 시트에 직접 붙여 넣는 껍데기 파일. 각 저장소의 파일을 그때그때 읽어 와서 늘 최신 */
+const RAW='https://raw.githubusercontent.com/MusicalPE/';
+const SHELL={
+  jumprope:[['학교용 껍데기 코드',RAW+'jumprope/main/Shell.gs','점퍼스_학교용_껍데기.txt'],['클럽/체육관용 껍데기 코드',RAW+'jumprope/main/club/Shell.gs','점퍼스_클럽용_껍데기.txt']],
+  pe:[['껍데기 코드',RAW+'pe-assistant/main/shell/Code.gs','체육매니저_껍데기.txt'],['설정 파일 (appsscript)',RAW+'pe-assistant/main/shell/appsscript.json','체육매니저_설정_appsscript.txt']],
+  s7942:[['껍데기 코드',RAW+'7942/main/shell/Code.gs','7942_껍데기.txt']],
+  dw:[['껍데기 코드',RAW+'class-economy/main/shell/Shell.gs','돈워리_껍데기.txt'],['설정 파일 (appsscript)',RAW+'class-economy/main/shell/appsscript.json','돈워리_설정_appsscript.txt']]
+};
+function shellBox(a){
+  const f=SHELL[a.id];if(!f)return '';
+  const conf=f.some(x=>x[0].startsWith('설정'));
+  return `<details class="shell"><summary>껍데기 파일<span>껍데기 업데이트 안내가 있을 때만</span></summary><div class="shell-body">
+    <p>평소에는 필요 없어요. 새 판은 화면이 저절로 바뀌고, 처음 설치는 설치 견본 복사로 끝나요. "껍데기를 바꿔 주세요"라는 업데이트 안내가 나왔을 때만, 이미 쓰고 있는 시트에 아래 순서로 바꿔 넣으면 됩니다.</p>
+    ${f.map((x,i)=>`<div class="shell-row"><b>${esc(x[0])}</b><button type="button" data-shell="${i}" data-act="copy">코드 복사</button><button type="button" data-shell="${i}" data-act="save">.txt로 받기</button></div>`).join('')}
+    <ol><li>쓰고 있는 시트에서 확장 프로그램 &gt; Apps Script를 엽니다.</li><li>원래 있던 코드를 모두 지우고 새 껍데기 코드를 붙여 넣은 뒤 저장합니다.</li>${conf?'<li>설정 파일도 바뀌었다고 안내된 경우에만, 왼쪽 톱니바퀴(프로젝트 설정)에서 "appsscript.json 표시"를 켜고 그 파일 내용을 바꿔 넣습니다.</li>':''}<li>배포 &gt; 배포 관리 &gt; 연필(수정)에서 버전을 "새 버전"으로 고르고 배포합니다. "새 배포"로 만들면 주소가 바뀌니 꼭 배포 관리에서 해 주세요.</li></ol><p>학생 기록과 설정은 시트에 그대로 남아요.</p>
+  </div></details>`;
+}
+async function shellAct(a,i,act){
+  const [label,url,name]=SHELL[a.id][i];
+  try{
+    const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw 0;const t=await r.text();
+    if(act==='copy'){await navigator.clipboard.writeText(t);toast(label+'를 복사했어요');}
+    else{const u=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/plain;charset=utf-8'}));const l=document.createElement('a');l.href=u;l.download=name;document.body.appendChild(l);l.click();l.remove();setTimeout(()=>URL.revokeObjectURL(u),2000);}
+  }catch(e){toast('파일을 불러오지 못했어요. 잠시 뒤 다시 눌러 주세요');}
+}
 const APPS=[
  {id:'pe',name:'체육 매니저',sub:'선생님께는 체육 업무 비서, 학생에게는 체력 코치',cat:['pe','work'],catLabel:'체육 수업 · 선생님 업무',status:'ok',
   desc:'수업 도우미, 수행평가, PAPS, 건강체력교실, 줄넘기(점프 Live), 색깔 매트 놀이터, FMS 도전, 스포츠클럽을 한 프로그램에서 관리해요. 학생은 "나의 체육 매니저"로 자기 기록을 넣고, 선생님은 학급 현황과 팀 짜기, 세특 초안까지 한곳에서 챙겨요. 무료이고, 자료는 내 구글 시트에만 남아요.',
@@ -442,9 +478,11 @@ function openModal(id,from){
    ${INTRO[a.id]?`<p class="label">소개 영상</p><div class="links"><a href="${INTRO[a.id]}" target="_blank" rel="noopener">${SVG.play}${esc(a.name)} 소개 영상 보기</a></div>`:''}
    ${a.tries.length?`<p class="label">설치 없이 바로 써 보기</p><div class="links">${a.tries.map(([u,t])=>`<a href="${u}" target="_blank" rel="noopener">${SVG.play}${esc(t)}</a>`).join('')}</div>`:''}
    ${a.links.length?`<p class="label">안내</p><div class="links">${a.links.map(([u,t])=>`<a href="${u}" target="_blank" rel="noopener">${SVG.open}${esc(t)}</a>`).join('')}</div>`:''}
+   ${shellBox(a)}
    <div class="mfoot">${primary(a)}${a.copy?`<button type="button" class="b2" data-copy>주소 복사</button>`:''}<button type="button" class="b2" data-close>닫기</button></div>`;
   sheet.querySelectorAll('.strip button').forEach(b=>b.addEventListener('click',()=>openLb(shots[+b.dataset.i])));
   sheet.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeModal));
+  sheet.querySelectorAll('[data-shell]').forEach(b=>b.addEventListener('click',()=>shellAct(a,+b.dataset.shell,b.dataset.act)));
   const cp=sheet.querySelector('[data-copy]');if(cp)cp.addEventListener('click',()=>copyLink(a));
   modal.hidden=false;document.body.style.overflow='hidden';sheet.scrollTop=0;sheet.querySelector('.x').focus();
 }
