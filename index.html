@@ -216,6 +216,16 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 .lb img{max-width:100%;max-height:82vh;border-radius:12px;object-fit:contain}
 .lb p{margin:0;color:#fff;font-size:.9rem}
 .lb .x{top:calc(14px + env(safe-area-inset-top,0px));right:calc(14px + env(safe-area-inset-right,0px))}
+.vp{z-index:50}
+.vp-wrap{width:min(1100px,100%,calc((100vh - 150px) * 16 / 9));display:flex;flex-direction:column;gap:10px}
+.vp-frame{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.vp-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vp-frame:fullscreen{border-radius:0;aspect-ratio:auto;width:100vw;height:100vh}
+.vp-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vp-bar p{flex:1;min-width:0;font-weight:800;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vp-bar button,.vp-bar a{font:inherit;font-size:.85rem;font-weight:800;color:#fff;background:rgb(255 255 255 / .14);border:1px solid rgb(255 255 255 / .35);border-radius:999px;padding:7px 14px;cursor:pointer;text-decoration:none}
+.vp-bar button:hover,.vp-bar a:hover{background:rgb(255 255 255 / .26)}
+@media (max-width:560px){.vp-bar p{flex-basis:100%}}
 .toast{position:fixed;z-index:50;left:50%;transform:translateX(-50%);bottom:calc(70px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;
   background:var(--navy);color:#fff;padding:12px 18px;border-radius:999px;font-size:.86rem;font-weight:700;box-shadow:0 12px 24px -8px rgb(0 0 0 / .4);animation:up .25s ease-out;max-width:calc(100% - 32px)}
 .toast svg{color:#7EE2B8;font-size:1.1rem}
@@ -294,6 +304,12 @@ button:focus-visible,a:focus-visible,.card:focus-visible,.frame:focus-visible{ou
 </div>
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="크게 보기">
   <button type="button" class="x" id="lb-x">닫기</button><img id="lb-img" alt=""><p id="lb-cap"></p>
+</div>
+<div class="lb vp" id="vp" hidden role="dialog" aria-modal="true" aria-label="영상 보기">
+  <div class="vp-wrap">
+    <div class="vp-frame" id="vp-frame"></div>
+    <div class="vp-bar"><p id="vp-title"></p><button type="button" id="vp-full">전체화면</button><a id="vp-yt" target="_blank" rel="noopener">유튜브에서 보기</a><button type="button" id="vp-x">닫기</button></div>
+  </div>
 </div>
 <div class="toast" id="toast" hidden role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg><span id="toast-msg"></span></div>
 
@@ -441,6 +457,37 @@ function openLb(s){document.getElementById('lb-img').src=s.src;document.getEleme
 function closeLb(){lb.hidden=true}
 document.getElementById('lb-x').addEventListener('click',closeLb);lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!lb.hidden)closeLb();else if(!modal.hidden)closeModal()});
+
+// 영상: 유튜브로 보내지 않고 이 페이지에서 바로 재생
+const vp=document.getElementById('vp'),vpFrame=document.getElementById('vp-frame'),vpFull=document.getElementById('vp-full');
+let vpBack=null;
+const ytId=u=>(String(u).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/)||[])[1];
+function openVideo(url,title,from){
+  const id=ytId(url);if(!id)return false;
+  vpBack=from||null;
+  vpFrame.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1" title="${esc(title)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  document.getElementById('vp-title').textContent=title;
+  document.getElementById('vp-yt').href=url;
+  vpFull.hidden=!(vpFrame.requestFullscreen||vpFrame.webkitRequestFullscreen);
+  vp.hidden=false;document.getElementById('vp-x').focus();
+  return true;
+}
+function closeVideo(){
+  if(document.fullscreenElement)document.exitFullscreen?.();
+  vpFrame.innerHTML='';vp.hidden=true;vpBack?.focus();
+}
+vpFull.addEventListener('click',()=>{
+  if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen).call(document);
+  else{const r=(vpFrame.requestFullscreen||vpFrame.webkitRequestFullscreen).call(vpFrame);r?.catch?.(()=>{})}
+});
+document.getElementById('vp-x').addEventListener('click',closeVideo);
+vp.addEventListener('click',e=>{if(e.target===vp)closeVideo()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!vp.hidden&&!document.fullscreenElement){e.stopImmediatePropagation();closeVideo()}},true);
+document.addEventListener('click',e=>{
+  if(e.defaultPrevented||e.button||e.ctrlKey||e.metaKey||e.shiftKey)return;
+  const a=e.target.closest('a[href]');if(!a||a.id==='vp-yt'||!ytId(a.href))return;
+  if(openVideo(a.href,a.textContent.trim().replace(/ 보기$/,''),a)){e.preventDefault();e.stopPropagation()}
+},true);
 
 // 알림
 let tt;function toast(m){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3000)}
