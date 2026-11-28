@@ -439,11 +439,11 @@ const APPS=[
  {id:'labcheck',name:'실험첵! Lab-Check!',sub:'QR 한 번으로 조별 실험을 한 단계씩',cat:['work'],catLabel:'선생님 업무',status:'soon',
   desc:'초등 과학 실험 수업 도우미예요. 선생님이 실험을 고르고 QR을 띄우면 학생들이 각자 기기로 들어와 조를 골라요. 학생 화면은 준비물과 안전 약속부터 실험 단계, 결과, 생각해 볼 질문까지 한 장씩 넘어가고, 조마다 "다했어요"를 누르면 선생님 화면에 모여요. 모든 조가 끝내면 선생님이 다음 장을 열어요. 학교에서 쓰는 교과서를 골라 두면 실험마다 교과서 쪽수도 함께 보여요.',
   tags:["QR로 조별 참여", "한 단계씩 넘기기", "조별 다했어요", "준비물 · 안전 약속", "결과 · 생각해 볼 질문", "교과서 쪽수 안내", "5학년 29개 실험"],specs:["과학 실험 수업", "선생님 로그인 · 학생은 QR", "5학년 1·2학기 8개 단원"],links:[],tries:[['https://musicalpe.github.io/Lap-Check/?demo','지어낸 실험 수업으로 미리 체험하기']]},
- {id:'screencheck',name:'화면첵! Screen-Check',sub:'우리 반 화면을 PC방 카운터처럼 한눈에',cat:['work'],catLabel:'선생님 업무',status:'soon',
+ {id:'screencheck',name:'화면첵! Screen-Check',sub:'우리 반 화면을 PC방 카운터처럼 한눈에',cat:['work'],catLabel:'선생님 업무',status:'vbeta',open:'https://musicalpe.github.io/screen-check/teacher.html',
   desc:'학생들이 반코드만 넣으면 자기 화면을 선생님께 보여 주고, 선생님은 옛날 PC방 카운터처럼 우리 반 화면을 좌석 칸으로 한눈에 보는 앱이에요. 1석 · 4석 · 전체 보기와 자동 넘기기로 돌아보고, 선생님 화면에만 보이는 펜과 형광펜으로 짚어 가며 설명해요. 딴 데 간 친구에게는 주의 표시를, 모두에게는 같은 페이지를 한 번에 보내요. 학생은 로그인도 이름도 필요 없고, 화면은 서버를 거치지 않고 선생님 기기로 바로 가며 저장하지 않아요.',
-  tags:["반코드 · QR 입장", "1석 · 4석 · 전체 보기", "자동 넘기기", "펜 · 형광펜 첨삭", "주의 표시", "페이지 보내기", "학생 로그인 없음", "화면 저장 안 함"],specs:["학생 화면 공유", "선생님 구글 로그인 · 학생은 반코드", "웨일북 · 크롬북 · 노트북"],links:[],tries:[]},
+  tags:["반코드 · QR 입장", "1석 · 4석 · 전체 보기", "자동 넘기기", "펜 · 형광펜 첨삭", "주의 표시", "페이지 보내기", "학생 로그인 없음", "화면 저장 안 함"],specs:["학생 화면 공유", "선생님 구글 로그인 · 학생은 반코드", "웨일북 · 크롬북 · 노트북"],links:[['https://musicalpe.github.io/screen-check/','학생 입장 화면 (반코드 넣기)']],tries:[]},
 ];
-const STATUS={soon:['공개 예정','st-soon'],beta:['시험판 배포 중','st-beta'],ok:['내 구글 시트에 설치','st-ok'],sky:['설치 견본 준비 중','st-sky'],blue:['로그인하고 바로 쓰기','st-blue'],gray:['공개 시기 미정','st-gray']};
+const STATUS={soon:['공개 예정','st-soon'],beta:['시험판 배포 중','st-beta'],vbeta:['베타 버전','st-beta'],ok:['내 구글 시트에 설치','st-ok'],sky:['설치 견본 준비 중','st-sky'],blue:['로그인하고 바로 쓰기','st-blue'],gray:['공개 시기 미정','st-gray']};
 const SVG={copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>',
  open:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
